@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">CustomNotes</string>
+    <string name="description">Description</string>
+    <string name="category">Category</string>
+    <string name="save_note">Save</string>
+    <string name="update_note">Update</string>
+    <string name="delete_note">Delete</string>
+    <string name="sort_by">Sort by</string>
+    <string name="date">Date</string>
+    <string name="by_category">By category</string>
+    <string name="by_description">By description</string>
+    <string name="by_date">By date</string>
+    <string name="categories">Categories</string>
+    <string name="delete_all">Delete all</string>
+    <string name="delete_all_failed">Delete all has been failed!</string>
+    <string name="delete_all_success">All deleted successfully!</string>
+    <string name="delete_failed">Delete has been failed!</string>
+    <string name="delete_success">Deleted successfully!</string>
+    <string name="update_failed">Update has been failed!</string>
+    <string name="update_success">Updated successfully!</string>
+    <string name="insert_failed">Insert has been failed!</string>
+    <string name="insert_success">Inserted successfully!</string>
+</resources>

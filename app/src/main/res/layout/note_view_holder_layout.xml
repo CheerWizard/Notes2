@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/drawable_note_editor"
+    android:weightSum="2">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <EditText
+            android:id="@+id/category_edit_text"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/colorAccent"
+            android:hint="@string/category"
+            android:textSize="18sp"
+            android:textColor="@color/colorAccent"/>
+
+        <Button
+            android:id="@+id/update_btn"
+            android:background="@drawable/drawable_save_note_btn"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="4dp"
+            android:text="@string/update_note"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp"
+            android:textAlignment="center"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/delete_btn"
+            android:background="@drawable/drawable_save_note_btn"
+            android:layout_width="32dp"
+            android:layout_margin="4dp"
+            android:layout_height="32dp"
+            android:text="@string/delete_note"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp"
+            android:textAlignment="center"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:weightSum="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/description_edit_text"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:textColorHint="@color/colorAccent"
+            android:layout_height="wrap_content"
+            android:hint="@string/description"
+            android:textSize="14sp"
+            android:textColor="@color/colorAccent"/>
+
+        <TextView
+            android:id="@+id/date_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/colorAccent"
+            android:text="date"
+            android:textSize="18sp"/>
+    </LinearLayout>
+</LinearLayout>
