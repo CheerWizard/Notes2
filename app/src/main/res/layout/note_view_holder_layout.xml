@@ -13,15 +13,19 @@
         android:orientation="horizontal"
         android:weightSum="3">
 
-        <EditText
-            android:id="@+id/category_edit_text"
+        <AutoCompleteTextView
             android:layout_weight="1"
+            android:id="@+id/category_auto_complete_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColorHint="@color/colorAccent"
             android:hint="@string/category"
             android:textSize="18sp"
-            android:textColor="@color/colorAccent"/>
+            android:textColor="@color/colorAccent"
+            android:textColorHint="@color/colorAccent"
+            android:completionThreshold="1"
+            android:completionHint="@string/category"
+            android:dropDownAnchor="@id/categories_text_view"
+            android:popupBackground="@android:color/black"/>
 
         <Button
             android:id="@+id/update_btn"
@@ -48,6 +52,15 @@
             android:layout_weight="1"/>
 
     </LinearLayout>
+
+    <TextView
+        android:layout_margin="4dp"
+        android:id="@+id/categories_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/categories"
+        android:textSize="18sp"
+        android:textColor="@color/colorAccent"/>
 
     <LinearLayout
         android:weightSum="2"

@@ -1,22 +1,29 @@
 package com.example.jeremy.customnotes.ui;
 
-import android.app.Application;
+import com.example.jeremy.customnotes.dependency_injection.components.AppComponent;
+import com.example.jeremy.customnotes.dependency_injection.components.DaggerAppComponent;
 
-import com.example.jeremy.customnotes.components.DaggerNoteComponent;
-import com.example.jeremy.customnotes.components.NoteComponent;
+import dagger.android.AndroidInjector;
+import dagger.android.support.DaggerApplication;
 
-public class CustomNoteApplication extends Application {
+public class CustomNoteApplication extends DaggerApplication {
 
-    private NoteComponent noteComponent;
+    private static CustomNoteApplication instance;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        noteComponent = DaggerNoteComponent.create();
+        instance = this;
     }
 
-    public NoteComponent getNoteComponent() {
-        return noteComponent;
+    public static synchronized CustomNoteApplication getInstance() {
+        return instance;
     }
 
+    @Override
+    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+        AppComponent appComponent = DaggerAppComponent.builder().application(this).build();
+        appComponent.inject(this);
+        return appComponent;
+    }
 }

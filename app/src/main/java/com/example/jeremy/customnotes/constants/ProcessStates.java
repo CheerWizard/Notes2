@@ -7,6 +7,7 @@ public final class ProcessStates {
         public static final int UPDATE_SUCCESS = 2;
         public static final int INSERT_SUCCESS = 3;
         public static final int DELETE_ALL_SUCCESS = 4;
+        public static final int SELECT_SUCCESS = 5;
     }
     //failed states
     public final static class Failed {
@@ -14,5 +15,6 @@ public final class ProcessStates {
         public static final int UPDATE_FAILED = -2;
         public static final int INSERT_FAILED = -3;
         public static final int DELETE_ALL_FAILED = -4;
+        public static final int SELECT_FAILED = -5;
     }
 }

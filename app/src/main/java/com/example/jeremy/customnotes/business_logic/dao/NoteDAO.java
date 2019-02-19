@@ -1,6 +1,7 @@
-package com.example.jeremy.customnotes.services.dao;
+package com.example.jeremy.customnotes.business_logic.dao;
 
-import com.example.jeremy.customnotes.models.Note;
+import com.example.jeremy.customnotes.constants.SQLiteConstants;
+import com.example.jeremy.customnotes.business_logic.data.Note;
 
 import java.util.List;
 
@@ -11,24 +12,26 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import static androidx.room.OnConflictStrategy.REPLACE;
+
 @Dao
 public interface NoteDAO {
     //insert note to table
-    @Insert
+    @Insert(onConflict = REPLACE)
     void save(Note note);
     //update note for table
     @Update
     void update(Note note);
     //get all notes from table
-    @Query("SELECT * FROM notes")
+    @Query("SELECT * FROM " + SQLiteConstants.Tables.NOTE_TABLE)
     LiveData<List<Note>> getNotes();
     //remove appropriate note from table
     @Delete
     void remove(Note note);
     //remove note by id from table
-    @Query("DELETE FROM notes WHERE id = :id")
+    @Query("DELETE FROM " + SQLiteConstants.Tables.NOTE_TABLE + " WHERE id = :id")
     void remove(int id);
     //remove all notes from table
-    @Query("DELETE FROM notes")
+    @Query("DELETE FROM " + SQLiteConstants.Tables.NOTE_TABLE)
     void removeAll();
 }

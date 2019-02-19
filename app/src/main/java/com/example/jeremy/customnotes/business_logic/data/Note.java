@@ -1,4 +1,6 @@
-package com.example.jeremy.customnotes.models;
+package com.example.jeremy.customnotes.business_logic.data;
+
+import com.example.jeremy.customnotes.constants.SQLiteConstants;
 
 import java.util.Date;
 
@@ -6,7 +8,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "notes")
+@Entity(tableName = SQLiteConstants.Tables.NOTE_TABLE)
 public class Note {
 
     @PrimaryKey(autoGenerate = true)
@@ -16,19 +18,19 @@ public class Note {
     @ColumnInfo(name = "category_column")
     private String category;
     @ColumnInfo(name = "date_column")
-    private Date date;
+    private String date;
 
     public Note(String description, String category , Date date) {
         this.description = description;
         this.category = category;
-        this.date = date;
+        this.date = date.toString();
     }
 
     public Note(int id , String description, String category , Date date) {
         this.id = id;
         this.description = description;
         this.category = category;
-        this.date = date;
+        this.date = date.toString();
     }
 
     public Note() {
@@ -50,12 +52,16 @@ public class Note {
         this.category = category;
     }
 
-    public Date getDate() {
-        return date;
+    public void setDate(Date date) {
+        this.date = date.toString();
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getDate() {
+        return date;
     }
 
     public void setId(int id) {

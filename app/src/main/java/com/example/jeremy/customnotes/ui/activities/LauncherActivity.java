@@ -6,11 +6,12 @@ import android.view.View;
 import com.example.jeremy.customnotes.R;
 import com.example.jeremy.customnotes.ui.fragments.NoteEditorFragment;
 import com.example.jeremy.customnotes.ui.fragments.NoteListFragment;
+import com.example.jeremy.customnotes.utils.cache.NoteCategoryCache;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import androidx.appcompat.app.AppCompatActivity;
+import dagger.android.support.DaggerAppCompatActivity;
 
-public class LauncherActivity extends AppCompatActivity implements View.OnClickListener {
+public class LauncherActivity extends DaggerAppCompatActivity implements View.OnClickListener {
 
     private FloatingActionButton addNoteFloatingActionButton;
     private FloatingActionButton toListFloatingActionButton;
@@ -28,20 +29,10 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
         initListeners();
     }
 
-    private void initViews() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.note_container , new NoteEditorFragment())
-                .commit();
-        addNoteFloatingActionButton = findViewById(R.id.add_note_floating_btn);
-        toListFloatingActionButton = findViewById(R.id.to_list_floating_btn);
-        addNoteFloatingActionButton.setEnabled(false);
-        toListFloatingActionButton.setEnabled(true);
-    }
-
-    private void initListeners() {
-        addNoteFloatingActionButton.setOnClickListener(this);
-        toListFloatingActionButton.setOnClickListener(this);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        NoteCategoryCache.removeAll();
     }
 
     @Override
@@ -50,21 +41,43 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
             case R.id.add_note_floating_btn:
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.note_container , new NoteEditorFragment())
+                        .replace(R.id.note_container , NoteEditorFragment.getInstance())
                         .addToBackStack(null)
-                        .commit();
+                        .commitAllowingStateLoss();
                 addNoteFloatingActionButton.setEnabled(false);
+                addNoteFloatingActionButton.setAlpha(0.0f);
                 toListFloatingActionButton.setEnabled(true);
+                toListFloatingActionButton.setAlpha(1.0f);
                 break;
             case R.id.to_list_floating_btn:
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.note_container , new NoteListFragment())
+                        .replace(R.id.note_container , NoteListFragment.getInstance())
                         .addToBackStack(null)
-                        .commit();
+                        .commitAllowingStateLoss();
                 addNoteFloatingActionButton.setEnabled(true);
+                addNoteFloatingActionButton.setAlpha(1.0f);
                 toListFloatingActionButton.setEnabled(false);
+                toListFloatingActionButton.setAlpha(0.0f);
                 break;
         }
+    }
+
+    private void initViews() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.note_container , NoteListFragment.getInstance())
+                .commitAllowingStateLoss();
+        addNoteFloatingActionButton = findViewById(R.id.add_note_floating_btn);
+        toListFloatingActionButton = findViewById(R.id.to_list_floating_btn);
+        addNoteFloatingActionButton.setEnabled(false);
+        addNoteFloatingActionButton.setAlpha(0.0f);
+        toListFloatingActionButton.setEnabled(true);
+        toListFloatingActionButton.setAlpha(1.0f);
+    }
+
+    private void initListeners() {
+        addNoteFloatingActionButton.setOnClickListener(this);
+        toListFloatingActionButton.setOnClickListener(this);
     }
 }

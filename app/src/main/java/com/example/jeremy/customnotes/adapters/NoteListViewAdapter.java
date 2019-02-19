@@ -1,19 +1,27 @@
-package com.example.jeremy.customnotes.utils.adapters;
+package com.example.jeremy.customnotes.adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.jeremy.customnotes.R;
-import com.example.jeremy.customnotes.models.Note;
+import com.example.jeremy.customnotes.business_logic.data.Note;
+import com.example.jeremy.customnotes.ui.CustomNoteApplication;
+import com.example.jeremy.customnotes.utils.cache.NoteCategoryCache;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
 public class NoteListViewAdapter extends BaseAdapter {
 
     public interface NoteListEventListener {
@@ -26,8 +34,10 @@ public class NoteListViewAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;
     private NoteViewHolder noteViewHolder;
 
-    public NoteListViewAdapter(Context context) {
-        layoutInflater = LayoutInflater.from(context);
+    @Inject
+    public NoteListViewAdapter() {
+        layoutInflater = LayoutInflater.from(CustomNoteApplication.getInstance());
+        list = new ArrayList<>();
     }
 
     public void addListener(NoteListEventListener noteListEventListener) {
@@ -35,7 +45,6 @@ public class NoteListViewAdapter extends BaseAdapter {
     }
 
     public void onUpdateList(List<Note> newList) {
-        this.list = newList;
         list.clear();
         list.addAll(newList);
         notifyDataSetChanged();
@@ -66,8 +75,8 @@ public class NoteListViewAdapter extends BaseAdapter {
         else noteViewHolder = (NoteViewHolder) convertView.getTag();
 
         Note note = list.get(position);
-        noteViewHolder.dateTextView.setText(note.getDate().toString());
-        noteViewHolder.categoryEditText.setText(note.getCategory());
+        noteViewHolder.dateTextView.setText(note.getDate());
+        noteViewHolder.categoryAutoCompleteTextView.setText(note.getCategory());
         noteViewHolder.descriptionEditText.setText(note.getDescription());
         if (noteViewHolder.deleteButton != null) noteViewHolder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,26 +90,26 @@ public class NoteListViewAdapter extends BaseAdapter {
                 if (noteListEventListener != null) noteListEventListener.onUpdateBtn(position);
             }
         });
-        return convertView;
-    }
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(CustomNoteApplication.getInstance() , android.R.layout.simple_list_item_1 , NoteCategoryCache.getNoteCategoryArray());
+        noteViewHolder.categoryAutoCompleteTextView.setAdapter(arrayAdapter);
 
-    public TextView getDateTextView() {
-        return noteViewHolder.dateTextView;
+        return convertView;
     }
 
     public EditText getDescriptionEditText() {
         return noteViewHolder.descriptionEditText;
     }
 
-    public EditText getCategoryEditText() {
-        return noteViewHolder.categoryEditText;
+    public AutoCompleteTextView getCategotyAutoCompleteTextView() {
+        return noteViewHolder.categoryAutoCompleteTextView;
     }
 
     private class NoteViewHolder {
 
         private TextView dateTextView;
         private Button updateButton , deleteButton;
-        private EditText descriptionEditText , categoryEditText;
+        private AutoCompleteTextView categoryAutoCompleteTextView;
+        private EditText descriptionEditText;
 
         private NoteViewHolder(View view) {
             initViews(view);
@@ -108,10 +117,11 @@ public class NoteListViewAdapter extends BaseAdapter {
 
         private void initViews(View view) {
             descriptionEditText = view.findViewById(R.id.description_edit_text);
-            categoryEditText = view.findViewById(R.id.category_edit_text);
+            categoryAutoCompleteTextView = view.findViewById(R.id.category_auto_complete_text_view);
             deleteButton = view.findViewById(R.id.delete_btn);
             updateButton = view.findViewById(R.id.update_btn);
             dateTextView = view.findViewById(R.id.date_text_view);
+            final TextView categoriesTextView = view.findViewById(R.id.categories_text_view);
         }
     }
 }

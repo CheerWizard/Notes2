@@ -1,16 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ListView
         android:id="@+id/note_list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <android.support.design.widget.FloatingActionButton
-        android:layout_below="@id/note_list_view"
-        android:id="@+id/delete_all_floating_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:weightSum="4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:padding="4dp">
+
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/delete_all_btn"
+            android:layout_width="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:textSize="14sp"
+            android:layout_height="24dp"
+            android:text="@string/clear"
+            android:background="@drawable/drawable_save_note_btn"/>
+        <Button
+            android:textColor="@color/colorAccent"
+            android:layout_weight="1"
+            android:id="@+id/by_category"
+            android:layout_width="wrap_content"
+            android:textSize="12sp"
+            android:layout_height="24dp"
+            android:text="@string/category"
+            android:background="@drawable/drawable_save_note_btn"/>
+        <Button
+            android:textSize="12sp"
+            android:textColor="@color/colorAccent"
+            android:layout_weight="1"
+            android:id="@+id/by_description"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:text="@string/description"
+            android:background="@drawable/drawable_save_note_btn"/>
+        <Button
+            android:textColor="@color/colorAccent"
+            android:layout_weight="1"
+            android:textSize="14sp"
+            android:id="@+id/by_date"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:text="@string/date"
+            android:background="@drawable/drawable_save_note_btn"/>
+    </LinearLayout>
 </RelativeLayout>
